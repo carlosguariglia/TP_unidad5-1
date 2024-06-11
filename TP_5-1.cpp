@@ -35,6 +35,9 @@ using namespace std;
 
 const int MaxProductos = 100;
 
+int estadodatos = -1;  // flag para indicar si el archivo ya fue modificado y no fue guardado
+                    // -1 no modificado, no leido.  0 guardado 1 modificado
+
 struct tProducto
 {
     int id;
@@ -90,7 +93,6 @@ int main()
             break;
         case 3:
             eliminarproducto(lista);
-            imprimirinventario(lista);
             break;
         case 4:
             imprimirinventario(lista);
@@ -99,7 +101,21 @@ int main()
             guardarinventario(lista);
             break;
         case 0:
+            if (estadodatos == 1)
+            {
+                cout << "Se ha modificado el inventario y no se ha guardado a archivo" << endl;
+                cout << "Desea guardar el inventario antes de salir?" << endl;
+                cout << "1. Si" << endl;
+                cout << "2. No" << endl;
+                cout << "Opcion: " << endl;
+                cin >> menu;
+                if (menu == 1)
+                {
+                    guardarinventario(lista);
+                }   
+            }
             cout << "Gracias por usar el programa" << endl;
+            menu=0;
             break;
         default:
             cout << "Opcion no valida" << endl;
@@ -141,7 +157,6 @@ tLista leerarchivo()
         archivo >> lista.productos[indice].id;
     }
     archivo.close();
-
     return lista;
 }
 
@@ -151,11 +166,11 @@ void imprimirinventario(tLista lista)
     cout << "|-------------------------------------------------------|" << endl;
     cout << "|  Inventario                                           |" << endl;
     cout << "|-------------------------------------------------------|" << endl;
-    cout << "| ID \t\t|  Precio \t\t|  Unidades\t|" << endl;
+    cout << "| ID         \t|  Precio         \t|  Unidades\t|" << endl;
     cout << "|-------------------------------------------------------|" << endl;
     while ( lista.productos[indice].id != -1 )
     {
-        cout << "|  " << lista.productos[indice].id << " \t\t|  " << lista.productos[indice].precio << " \t\t\t|  " << lista.productos[indice].unidades << "\t\t|" << endl;
+        cout << "|  " << lista.productos[indice].id << "     \t|  " << lista.productos[indice].precio << "     \t\t|  " << lista.productos[indice].unidades << "\t\t|" << endl;
         indice++;
     }
     cout << "|-------------------------------------------------------|" << endl;
@@ -199,7 +214,7 @@ void eliminarproducto(tLista &lista)
     cin >> id;
     cout << "---------------------------------------------------------------------" << endl;
     int indice=0;
-    while ( lista.productos[indice].id != id )
+    while ((lista.productos[indice].id != id) && (lista.productos[indice].id != -1))
     {   
         indice++;
     }
@@ -210,6 +225,7 @@ void eliminarproducto(tLista &lista)
             lista.productos[indice] = lista.productos[indice+1];
             indice++;
         }
+        estadodatos = 1;
         cout << "Se ha borrardo el producto con ID: " << id << endl;
     }
     else
@@ -231,13 +247,19 @@ void guardarinventario(tLista lista)
     int indice = 0;
     while ( lista.productos[indice].id != -1 )
     {
-        archivo << lista.productos[indice].id << endl;
-        archivo << lista.productos[indice].precio << endl;
+        archivo << lista.productos[indice].id << " ";
+        archivo << lista.productos[indice].precio << " ";
         archivo << lista.productos[indice].unidades << endl;
         indice++;
     }
     archivo << "-1" << endl;
     archivo.close();
+    estadodatos = 0;
+cout << "Se ha guardado el inventario en el archivo 'inventario.txt'" << endl;
+cout << "Presione ENTER para volver al menu principal" << endl;
+cin.ignore();
+cin.get();
+
 }
 
 void clearConsole() {
