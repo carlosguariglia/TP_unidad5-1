@@ -21,18 +21,18 @@ int main()
     getline(cin, frase);
     
     clearConsole();
-    cout << "-------------------------------------" << endl;
+    cout << "------------------------------------------" << endl;
     cout << "La frase: " << frase << endl;
-    cout << "-------------------------------------" << endl;
-    cout << "Palabra    \tCantidad de Letras" << endl;
-    cout << "-------------------------------------" << endl;
+    cout << "------------------------------------------" << endl;
+    cout << "Palabra              \tCantidad de Letras" << endl;
+    cout << "------------------------------------------" << endl;
 
 
     while (indice < frase.length())
     {
         if (frase[indice] == ' ')
         {
-            cout << "\t               " << letras << endl;
+            cout << "\t          \t" << letras << endl;
             letras = 0;
         }
         else
@@ -42,9 +42,11 @@ int main()
         }
         indice++;
     }
-    cout << "\t               " << letras << endl;
-
-
+    if (frase[frase.length() - 1] != ' ')   // este if es para chequear si hay un espacio al final de la frase
+    {
+        cout << "\t          \t" << letras << endl;
+    }
+    
 
     return 0;
 }
