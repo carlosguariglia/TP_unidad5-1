@@ -10,6 +10,7 @@
 using namespace std;
 
 void clearConsole();
+void contarletras(string frase, int letras, int indice);
 
 int main()
 {   
@@ -17,6 +18,41 @@ int main()
     string frase;
     int letras = 0;
     int indice = 0;
+    int menu = 0;
+    do 
+    {
+        clearConsole();
+        cout << "---------------------------------------------------------------------" << endl;
+        cout << "*                     MENU PRINCIPAL                                 *" << endl;
+        cout << "---------------------------------------------------------------------" << endl;
+        cout << "1. Ingresar una frase para contar las letras de cada palabra" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Opcion: " << endl;
+        cout << "---------------------------------------------------------------------" << endl;
+        cin >> menu;
+        clearConsole();
+        switch (menu)
+        {
+        case 1:
+            contarletras(frase, letras, indice);
+            break;
+        case 0:
+            break;
+        default:
+            cout << "Opcion incorrecta" << endl;
+            cout << "Presione ENTER para volver al menu principal" << endl;
+            cin.ignore();
+            cin.get();
+            break;
+        }
+    } while (menu != 0);
+    return 0;
+}
+
+void contarletras(string frase, int letras, int indice)
+{   
+    clearConsole();
+    cin.ignore();
     cout << "Ingrese una frase" << endl;
     getline(cin, frase);
     
@@ -46,9 +82,9 @@ int main()
     {
         cout << "\t          \t" << letras << endl;
     }
-    
-
-    return 0;
+    cout << "------------------------------------------" << endl;
+    cout << "Presione ENTER para volver al menu principal" << endl;
+    cin.get();
 }
 
 void clearConsole() {
