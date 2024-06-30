@@ -28,8 +28,8 @@ void clearConsole();
 
 int main() {
     clearConsole();
-    int N;
-    cout << "Ingrese el tamaño de la matriz NxN (máximo 100): ";
+    int N;  // Tamano de la matriz, mas alla de no manejar matrices dinamicas seran acortadas por el numero N
+    cout << "Ingrese el tamaño de la matriz NxN (máximo 100): "; // por el enunciado solo se trabajan matrices cuadradas
     cin >> N;
 
     // Validación del tamaño de la matriz
@@ -39,7 +39,7 @@ int main() {
     }
 
     // Declarar matrices
-    int A[100][100];
+    int A[100][100];        // al no manejar matrices dinamicas, se limita a 100x100
     int B[100][100];
     int C[100][100];
     int T[100][100]; // Para la matriz transpuesta
@@ -63,8 +63,18 @@ int main() {
         cout << "9. Listar matriz B\n";
         cout << "0. Salir\n";
         // Mostrar el estado de las matrices A y B
-        cout << "Matriz A: " << (matrizA_cargada ? "Cargada" : "No cargada") << endl;
-        cout << "Matriz B: " << (matrizB_cargada ? "Cargada" : "No cargada") << endl;
+        cout << "Matriz A: ";
+        if (matrizA_cargada) {
+            cout << "Cargada\n";
+        } else {
+            cout << "No Cargada\n";
+        }
+        cout << "Matriz B: ";
+        if(matrizB_cargada) {
+            cout << "Cargada\n";
+        } else {
+            cout << "No Cargada\n";
+        }
         cout << "Opción: ";
         cin >> opcion;
 
@@ -84,93 +94,52 @@ int main() {
                 cout << "Matriz B cargada con éxito.\n";
                 break;
             case 3:
-                if (!matrizA_cargada || !matrizB_cargada) {
-                    cout << "Error: Matrices A y B deben estar cargadas para realizar la suma.\n";
-                    if (!matrizA_cargada) cout << "Desea cargar la matriz A ahora? (s/n): ";
-                    if (!matrizB_cargada) cout << "Desea cargar la matriz B ahora? (s/n): ";
-                    char cargar;
-                    cin >> cargar;
-                    if (cargar == 's' || cargar == 'S') {
-                        if (!matrizA_cargada) { cout << "Ingrese la matriz A:\n"; leerMatriz(A, N); matrizA_cargada = true; }
-                        if (!matrizB_cargada) { cout << "Ingrese la matriz B:\n"; leerMatriz(B, N); matrizB_cargada = true; }
-                    }
-                }
                 if (matrizA_cargada && matrizB_cargada) {
                     sumarMatrices(A, B, C, N);
                     cout << "La matriz resultante de la suma es:\n";
                     imprimirMatriz(C, N);
+                }else {
+                    cout << "Error: Matrices A y B deben estar cargadas.\n";
                 }
                 break;
             case 4:
-                if (!matrizA_cargada || !matrizB_cargada) {
-                    cout << "Error: Matrices A y B deben estar cargadas para realizar la resta.\n";
-                    if (!matrizA_cargada) cout << "Desea cargar la matriz A ahora? (s/n): ";
-                    if (!matrizB_cargada) cout << "Desea cargar la matriz B ahora? (s/n): ";
-                    char cargar;
-                    cin >> cargar;
-                    if (cargar == 's' || cargar == 'S') {
-                        if (!matrizA_cargada) { cout << "Ingrese la matriz A:\n"; leerMatriz(A, N); matrizA_cargada = true; }
-                        if (!matrizB_cargada) { cout << "Ingrese la matriz B:\n"; leerMatriz(B, N); matrizB_cargada = true; }
-                    }
-                }
+                
                 if (matrizA_cargada && matrizB_cargada) {
                     restarMatrices(A, B, C, N);
                     cout << "La matriz resultante de la resta es:\n";
                     imprimirMatriz(C, N);
+                }else {
+                    cout << "Error: Matrices A y B deben estar cargadas.\n";
                 }
                 break;
             case 5:
-                if (!matrizA_cargada || !matrizB_cargada) {
-                    cout << "Error: Matrices A y B deben estar cargadas para realizar la multiplicación.\n";
-                    if (!matrizA_cargada) cout << "Desea cargar la matriz A ahora? (s/n): ";
-                    if (!matrizB_cargada) cout << "Desea cargar la matriz B ahora? (s/n): ";
-                    char cargar;
-                    cin >> cargar;
-                    if (cargar == 's' || cargar == 'S') {
-                        if (!matrizA_cargada) { cout << "Ingrese la matriz A:\n"; leerMatriz(A, N); matrizA_cargada = true; }
-                        if (!matrizB_cargada) { cout << "Ingrese la matriz B:\n"; leerMatriz(B, N); matrizB_cargada = true; }
-                    }
-                }
+                
                 if (matrizA_cargada && matrizB_cargada) {
                     multiplicarMatrices(A, B, C, N);
                     cout << "La matriz resultante de la multiplicación es:\n";
                     imprimirMatriz(C, N);
+                }else {
+                    cout << "Error: Matrices A y B deben estar cargadas.\n";
                 }
                 break;
             case 6:
-                if (!matrizA_cargada) {
-                    cout << "Error: La matriz A debe estar cargada para realizar la transposición.\n";
-                    cout << "Desea cargar la matriz A ahora? (s/n): ";
-                    char cargar;
-                    cin >> cargar;
-                    if (cargar == 's' || cargar == 'S') {
-                        cout << "Ingrese la matriz A:\n";
-                        leerMatriz(A, N);
-                        matrizA_cargada = true;
-                    }
-                }
+                
                 if (matrizA_cargada) {
                     transponerMatriz(A, T, N);
                     cout << "La matriz transpuesta es:\n";
                     imprimirMatriz(T, N);
+                } else {
+                    cout << "Error: La matriz A no esta cargada.\n";
                 }
                 break;
             case 7:
-                if (!matrizA_cargada) {
-                    cout << "Error: La matriz A debe estar cargada para encontrar puntos de silla.\n";
-                    cout << "Desea cargar la matriz A ahora? (s/n): ";
-                    char cargar;
-                    cin >> cargar;
-                    if (cargar == 's' || cargar == 'S') {
-                        cout << "Ingrese la matriz A:\n";
-                        leerMatriz(A, N);
-                        matrizA_cargada = true;
-                    }
-                }
+                
                 if (matrizA_cargada) {
                     cout << "La matriz A es:\n";
                     imprimirMatriz(A, N);
                     puntosDeSilla(A, N);
+                } else {
+                    cout << "Error: La matriz A no esta cargada.\n";
                 }
                 break;
             case 8: if (matrizA_cargada) {
